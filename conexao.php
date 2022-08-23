@@ -7,7 +7,7 @@
 	$conexao = mysqli_connect("localhost:3306", "root", "");
 		mysqli_set_charset($conexao, "utf8");
 		mysqli_select_db($conexao, "controle_exames");
-		try{
+	try{
     //Conexão com a porta
     $conn = new PDO("mysql:host=$host;port=$port;dbname=" . $dbname, $user, $pass);
 

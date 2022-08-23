@@ -16,6 +16,7 @@
 
 	if (isset($_POST['login'])) {
 		include "conexao.php";
+		$login = $_POST['login'];
 		$login = mysqli_real_escape_string($conexao , $_POST['login']);
 		$login = trim($login);
 		if ($login != "") {
@@ -23,17 +24,22 @@
 			$conj_resultados = mysqli_query($conexao , $query);
 			$qtd_usuarios = mysqli_num_rows($conj_resultados);
 			if ($qtd_usuarios > 0) {
-				$dados = mysqli_fetch_array($conj_resultados);
-				$_SESSION['id_usuario'] = $dados['id'];
-				    $_SESSION['nome_usuario'] = $dados['nome'];
-					$query_usuario = "SELECT id, nome, login 
-                    FROM usuario 
+            $dados = $_SESSION['dados'];
+			
+				//var_dump($_SESSION['dados']);
+
+					$query_usuario = "SELECT *
+					FROM usuario
                     WHERE login =:login  
                     LIMIT 1";
+					
 					$result_usuario = $conn->prepare($query_usuario);
-					$result_usuario->bindParam(":login", $dados['login'], PDO::PARAM_STR);
+					$result_usuario->bindParam(':login', $dados['login'], PDO::PARAM_STR);
 					$result_usuario->execute();
+	
+
 		if (($result_usuario) and ($result_usuario->rowCount() != 0)) {
+
             $row_usuario = $result_usuario->fetch(PDO::FETCH_ASSOC);
             $chave_recuperar_senha = password_hash($row_usuario['id'], PASSWORD_DEFAULT);
             //echo "Chave $chave_recuperar_senha <br>";
@@ -48,6 +54,7 @@
 
             if ($result_up_usuario->execute()) {
                 $link = "http://localhost/monitoraSaude/atualizar_senha.php?chave=$chave_recuperar_senha";
+				$_SESSION['chave'] = $chave_recuperar_senha;
 
                 try {
                     /*$mail->SMTPDebug = SMTP::DEBUG_SERVER;*/
@@ -69,38 +76,42 @@
                     $mail->AltBody = 'Prezado(a) ' . $row_usuario['nome'] ."\n\nVocê solicitou alteração de senha.\n\nPara continuar o processo de recuperação de sua senha, clique no link abaixo ou cole o endereço no seu navegador: \n\n" . $link . "\n\nSe você não solicitou essa alteração, nenhuma ação é necessária. Sua senha permanecerá a mesma até que você ative este código.\n\n";
 
                     $mail->send();
+					$_SESSION['msg'] = "<p style='color: green'>Enviado e-mail com instruções para recuperar a senha. 
+					Acesse a sua caixa de e-mail para recuperar a senha!</p>";
 
-                    $_SESSION['msg'] = "<p style='color: green'>Enviado e-mail com instruções para recuperar a senha. Acesse a sua caixa de e-mail para recuperar a senha!</p>";
-                } catch (Exception $e) {
-                    echo "Erro: E-mail não enviado sucesso. Mailer Error: {$mail->ErrorInfo}";
+				} catch (Exception $e) {
+                    $_SESSION['msg'] = "<p>Erro: E-mail não enviado sucesso. Mailer Error: {$mail->ErrorInfo}</p>";
+
                 }
             } else {
-                echo  "<p style='color: #ff0000'>Erro: Tente novamente!</p>";
+                $_SESSION['msg'] =  "<p style='color: red'>Erro: Tente novamente!</p>";
             }
         } else {
-            echo "<p style='color: #ff0000'>Erro: Usuário não encontrado!</p>";
-        }
-    }
-
-    
-
-    
-				
-				} else {
-						$_SESSION['senhaErro'] = " Senha Inválida!";
-				}
-		
-		} else {
-			$_SESSION['campoVazio'] = " Digite o email";
+            $_SESSION['msg'] = "<p style='color: red'>Erro: Usuário não encontrado!</p>";
+		}
+        
+    }	 else {
+			$_SESSION['msg'] = "<p style='color: red'>Erro: Usuário não encontrado!</p>";
+			}		
+		}  else {
+			$_SESSION['msg'] = "<p style='color: red'> Digite o email</p>";
 			}
-
-
+		
+		}
+ if (isset($_SESSION['msg_rec'])) {
+        echo $_SESSION['msg_rec'];
+        unset($_SESSION['msg_rec']);
+    }
+			
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
+     <meta charset="utf-8">
     <title>Recupere sua senha</title>
-    <meta charset="utf-8">
+	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	
@@ -108,21 +119,33 @@
   </head>
   <body>
 	<?php include 'header.php';?>
-	<?php if (isset($_SESSION['msg_rec'])) {
-        echo $_SESSION['msg_rec'];
-        unset($_SESSION['msg_rec']);
-    }?>
 
-	<form action="recuperaSenha.php" method="POST" class="ml-5 pr-5" >
-				<div class=" container-cad form-group col-5 float-left ml-5 mr-0 pr-0 pl-5   border-- border-dark h-5 "  >	
-					<h3><strong>Recupere sua senha</strong></h3>
-					<br>
-						<label for="login" class="form-label"><strong>Digite o email cadastrado: </strong> </label>
-						<input class="form-control" type="email" name="login">
+	<div class=" container-cad form-group col-xl-6 offset-xl-3 "  >	
+	
+		<form action="recuperaSenha.php" method="POST" class='m-2'>
+		
+   
+    
+						<h3 class=" mt-5 text-center"><strong>Recupere sua senha</strong></h3>
+						
 						<br>
-
-						<input class="btn btn-primary" type="submit"  value="Recuperar Senha"/>
-	</form> 
+							<label for="login" class="form-label align-baseline"><strong>Digite o email cadastrado: </strong> </label>
+							<input class="form-control" type="email" name="login">
+							 <?php if (isset($_SESSION['msg'])) {
+									echo $_SESSION['msg'];
+									unset($_SESSION['msg']); }
+									?>
+						<br>
+							<div class="align-items-center  ">
+							<input class="btn btn-primary mb-3 " type="submit"  value="Recuperar Senha"> 
+							<b class=" text-truncate">Lembrou? <a href="cad_usuario.php" >clique aqui</a> para entrar!
+							</b>
+							</div>
+		</form> 
+	</div>
+	 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   </body>
 
 </html>

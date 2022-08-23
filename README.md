@@ -1,4 +1,0 @@
-<<<<<<< HEAD
-ola
-=======
-# monitoraSaude
