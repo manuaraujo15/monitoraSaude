@@ -24,19 +24,24 @@
 		$nome = $_POST['nome'];
 		$login = $_POST['login'];
 		$senha = md5($_POST['senha']);	
+		$_SESSION['dados'] =  $dadoss;
+
 		if (strcmp($login, $dadoss['login']) != 0) {
 			session_start();
 			$_SESSION['login-post'] = $login;
 			$_SESSION['nome_usuario'] = $nome;
 			$_SESSION['senha'] = $senha;
 			$_SESSION['login'] = $dadoss['login'];
-			
+			$_SESSION['dados'] =  $dadoss;
+
 			$query = "INSERT INTO usuario (nome, login, senha) VALUES ('$nome','$login','$senha')";
 			$conj_resultados = mysqli_query($conexao, $query);
 			$query = "SELECT * FROM usuario WHERE login = '$login'";
 			$conj_resultados = mysqli_query($conexao , $query);
 			$dados = mysqli_fetch_array($conj_resultados);
 			$_SESSION['id_usuario'] = $dados['id_usuario'];
+			$_SESSION['dados'] =  $dados;
+
 			mysqli_close($conexao);
 			header("Location: cad_exame.php");		
 	} else{
@@ -68,7 +73,9 @@
 				$_SESSION['dados'] =  $dados;
 
 			if (strcmp($senha1, $dados['senha']) == 0) {
+				session_start();
 					$senha = password_hash($senha1, PASSWORD_DEFAULT);
+					$_SESSION['dados'] =  $dados;
 					$_SESSION['login-post'] = $_SESSION['login-post'];
 					$_SESSION['id_usuario'] = $dados['id_usuario'];
 				    $_SESSION['nome_usuario'] = $dados['nome'];
@@ -111,16 +118,17 @@
   <head>
     <meta charset="utf-8">
     <title>	Cadastro de Usuário</title>
-		 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">	
-		<link rel="stylesheet"  href="main.css" >
+		<link rel="stylesheet" type="text/css"  href="css/mainn.css" >
+		<link rel="stylesheet" type="text/css"  href="css/header.css" >
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+		
   </head>
-
-	<body>
-  		<?php include 'header.php';?>
-			<div class=" container-cad ml-xl-5 ">
+	<body class="text-decoration-none">
+	 <?php include 'header.php';?>
+			<div class=" container-cad form-group ml-xl-5 ">
 
 			<form action="cad_usuario.php" method="POST" class="ml-xl-5 pr-xl-5 mt-xl-2" >
 				<div class="form-group col-xl-5  float-xl-left  pr-xl-5 ml-xl-5  mr-xl-0 border-right border-dark-xl-5 h-xl-5 ">
@@ -158,14 +166,20 @@
 						  
 						
 					<br/><br/>
-					<label for="senha" class="form-label">Senha: </label>
-					<input  class="form-control" type="password" name="senha" id="senha"
+					<label for="senha" class="form-label" >Senha: </label>
+					<p class="input-group">
+					<input class="form-control border-right-0" type="password" name="senha" id="senha" 
 					<?php
 							if(!empty($_SESSION['value_senha'])){
 								echo "value='".$_SESSION['value_senha']."'";
 								unset($_SESSION['value_senha']);
 							}
-						 ?>	>
+						 ?> > 	
+						 <span class="input-group-append bg-white border-left-0">
+						  <span class="input-group-text bg-transparent">
+						  <i class="bi bi-eye fa-lg "  onclick="mostrarSenha()" ></i>
+						  </span></span></p>
+ 
 						 <?php
 							if(!empty($_SESSION['vazio_senha'])){
 								echo "<p style='color: #f00; '>".$_SESSION['vazio_senha']."</p>";
@@ -173,10 +187,6 @@
 							}
 						 ?>
 					<br/><br/>
-						
-
-
-
 					<input class="btn btn-success" type="submit"  value="Cadastrar"/>
 					<a class="btn btn-secondary" href="index.php" value="Voltar"> voltar</a>
 			    </div>
@@ -184,6 +194,27 @@
 			</form>
 		<?php include 'entra_usuario.php';?>
 
+ 
 
+	<script>
+			function mostrarSenha(){
+				var tipo = document.getElementById("senha");
+				if(tipo.type == "password"){
+					tipo.type = "text";
+				}else{
+					tipo.type = "password";
+				}
+			}
+		</script>
+		<script>
+			function mostrarSenhas(){
+				var tipo = document.getElementById("senha1");
+				if(tipo.type == "password"){
+					tipo.type = "text";
+				}else{
+					tipo.type = "password";
+				}
+			}
+		</script>
     </body>
 </html>

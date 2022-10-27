@@ -2,7 +2,7 @@
 	session_start();
 	ob_start();
 	include_once 'conexao.php';
-
+				
 	use PHPMailer\PHPMailer\PHPMailer;
 	use PHPMailer\PHPMailer\SMTP;
 	use PHPMailer\PHPMailer\Exception;
@@ -20,13 +20,16 @@
 		$login = mysqli_real_escape_string($conexao , $_POST['login']);
 		$login = trim($login);
 		if ($login != "") {
+							
 			$query = "SELECT * FROM usuario WHERE login = '$login'";
 			$conj_resultados = mysqli_query($conexao , $query);
 			$qtd_usuarios = mysqli_num_rows($conj_resultados);
 			if ($qtd_usuarios > 0) {
-            $dados = $_SESSION['dados'];
+
+				$dados = mysqli_fetch_array($conj_resultados);
+				//$dados = $_SESSION['dados'];
 			
-				//var_dump($_SESSION['dados']);
+				//var_dump($dados);
 
 					$query_usuario = "SELECT *
 					FROM usuario
@@ -41,16 +44,16 @@
 		if (($result_usuario) and ($result_usuario->rowCount() != 0)) {
 
             $row_usuario = $result_usuario->fetch(PDO::FETCH_ASSOC);
-            $chave_recuperar_senha = password_hash($row_usuario['id'], PASSWORD_DEFAULT);
+            $chave_recuperar_senha = password_hash($row_usuario['id_usuario'], PASSWORD_DEFAULT);
             //echo "Chave $chave_recuperar_senha <br>";
 
             $query_up = "UPDATE usuario 
                         SET recuperar_senha =:recuperar_senha 
-                        WHERE id =:id 
+                        WHERE id_usuario =:id_usuario
                         LIMIT 1";
             $result_up_usuario = $conn->prepare($query_up);
             $result_up_usuario->bindParam(':recuperar_senha', $chave_recuperar_senha, PDO::PARAM_STR);
-            $result_up_usuario->bindParam(':id', $row_usuario['id'], PDO::PARAM_INT);
+            $result_up_usuario->bindParam(':id_usuario', $row_usuario['id_usuario'], PDO::PARAM_INT);
 
             if ($result_up_usuario->execute()) {
                 $link = "http://localhost/monitoraSaude/atualizar_senha.php?chave=$chave_recuperar_senha";
@@ -111,23 +114,19 @@
      <meta charset="utf-8">
     <title>Recupere sua senha</title>
 	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
-	<?php include 'header.php';?>
+	<?php include 'header-novo.php';?>
+	<BR>
 
 	<div class=" container-cad form-group col-xl-6 offset-xl-3 "  >	
 	
 		<form action="recuperaSenha.php" method="POST" class='m-2'>
-		
-   
-    
 						<h3 class=" mt-5 text-center"><strong>Recupere sua senha</strong></h3>
-						
 						<br>
 							<label for="login" class="form-label align-baseline"><strong>Digite o email cadastrado: </strong> </label>
 							<input class="form-control" type="email" name="login">

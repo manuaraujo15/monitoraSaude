@@ -1,0 +1,332 @@
+/**
+* Template Name: Arsha - v4.9.0
+* Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/
+* Author: BootstrapMade.com
+* License: https://bootstrapmade.com/license/
+*/
+
+/*--------------------------------------------------------------
+# General
+--------------------------------------------------------------*/
+body {
+  font-family: "Open Sans", sans-serif;
+  color: #444444;
+}
+
+a {
+  color: #47b2e4;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #73c5eb;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Jost", sans-serif;
+}
+
+/*--------------------------------------------------------------
+# Preloader
+--------------------------------------------------------------*/
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  overflow: hidden;
+  background: #37517e;
+}
+
+#preloader:before {
+  content: "";
+  position: fixed;
+  top: calc(50% - 30px);
+  left: calc(50% - 30px);
+  border: 6px solid #37517e;
+  border-top-color: #fff;
+  border-bottom-color: #fff;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  -webkit-animation: animate-preloader 1s linear infinite;
+  animation: animate-preloader 1s linear infinite;
+}
+
+@-webkit-keyframes animate-preloader {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes animate-preloader {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*--------------------------------------------------------------
+# Back to top button
+--------------------------------------------------------------*/
+.back-to-top {
+  position: fixed;
+  visibility: hidden;
+  opacity: 0;
+  right: 15px;
+  bottom: 15px;
+  z-index: 996;
+  background: #47b2e4;
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  transition: all 0.4s;
+}
+
+.back-to-top i {
+  font-size: 24px;
+  color: #fff;
+  line-height: 0;
+}
+
+.back-to-top:hover {
+  background: #6bc1e9;
+  color: #fff;
+}
+
+.back-to-top.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+/*--------------------------------------------------------------
+# Header
+--------------------------------------------------------------*/
+#header {
+  transition: all 0.5s;
+  z-index: 997;
+  padding: 1px;
+  background: #37517e;
+}
+#header .logotext{
+		display:block;
+margin-left:14px;
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+    text-items: center;
+		margin-top:-40px;
+		padding-bottom:10px;
+
+}
+#header .logo-header {
+  font-size: 30px;
+  margin: 0;
+  padding: 0;
+  font-weight: 700;
+  width:90px;	
+  margin-left:-70px;
+  max-height: 55px;
+  align-items: center;
+}
+.btn_icon_logout{
+	color:white;
+}
+.material-symbols-rounded{
+	color: white;
+}
+#header a {
+	color: #fff;
+	
+}
+.btn_icon_close{
+	display:none;
+}
+/*--------------------------------------------------------------
+# Navigation Menu
+--------------------------------------------------------------*/
+/**
+* Desktop Navigation 
+*/
+.navbar {
+  padding: 0;
+}
+
+.navbar ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+  align-items: center;
+}
+
+.navbar li {
+  position: relative;
+}
+
+.navbar a,
+.navbar a:focus {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0 10px 30px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #fff;
+  white-space: nowrap;
+  transition: 0.3s;
+}
+
+.navbar a i,
+.navbar a:focus i {
+  font-size: 12px;
+  line-height: 0;
+  margin-left: 5px;
+}
+
+.navbar a:hover,
+.navbar .active,
+.navbar .active:focus,
+.navbar li:hover>a {
+  color: #47b2e4;
+}
+
+.navbar .getstarted,
+.navbar .getstarted:focus {
+  padding: 8px 20px;
+  margin-left: 30px;
+  border-radius: 50px;
+  color: #fff;
+  font-size: 14px;
+  border: 2px solid #47b2e4;
+  font-weight: 600;
+}
+
+.navbar .getstarted:hover,
+.navbar .getstarted:focus:hover {
+  color: #fff;
+  background: #31a9e1;
+}
+
+.btn_icon_header{
+    display: none;
+	border: none;
+	background: transparent;
+} 
+.btn_icon_close{
+    display: none;
+	border: none;
+	background: transparent;
+} 		
+#check{
+	display: none; 
+}
+#check1{
+		display: none; 
+}
+
+@media screen and (max-width: 1000px) {
+	#check1:checked ~ .nav-header{
+		right: 0;
+	}
+	.navbar a  { 
+			flex-direction: column !important;
+			float: right;
+	}
+	
+	#header  .logo-header {
+		margin-left:3.5px;
+		margin:7px;
+		margin-top:-2px;
+		height:60px;
+		padding-top:3px;
+
+	}
+
+	 #header .logotext{
+		padding-bottom:6px;
+		margin-left:90px;
+		margin-top:-45px;
+
+
+	}
+	.navbar ul {
+	  flex-direction: column !important;			
+	  color:white;
+	  display: block;
+	  position: absolute;
+	  top: 70px;
+	  align-items: center;
+	  position: fixed;
+	  height: 100%;
+	  background-color: #37517E;
+	  overflow-y: auto;
+	  transition: 0.3s;
+	  padding: 1em;
+	  width: 70%;
+
+	}
+	.material-symbols-rounded{
+		color: white;
+	}
+	.navbar a,
+	.navbar a:focus {
+		width: 70%;
+		padding-right: 100px;
+		animation-duration: 1s;
+		right: 100%;
+		flex-direction: column !important;		
+	   	align-items: center;
+    	font-size: 18px;
+	    color: #fff;
+	}
+	.navbar {
+		align-items: center;
+		position: fixed;
+		flex-direction: column !important;		
+		top: 0;
+		background-color:#37517E;
+		height: 100%;
+		width: 70%;
+		padding: 1em;
+		animation-duration: 1s;
+		right: 100%;
+		font-size:16px;
+		color:white;
+    }	
+	.btn_icon_header{
+		margin-top:2%;
+		margin-left:33%;
+		align: right;
+		display: block;
+		color: WHITE;
+    }
+	.btn_icon_close{
+		align: right;
+		display: block;
+		color: WHITE;
+		margin-top:10%;
+    }
+
+	
+	
+
+ 
+}
+
