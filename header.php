@@ -3,7 +3,7 @@
   <head>
     <title>Monitora Saúde</title>
     <meta charset="utf-8">
-	<link rel="stylesheet" type="text/css"  href="css/mainn.css" >
+	<link rel="stylesheet" type="text/css"  href="css/main.css" >
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,700,1,200" >
 	<script src="https://kit.fontawesome.com/a076d05399.js"></script>

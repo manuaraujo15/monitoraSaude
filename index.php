@@ -90,7 +90,7 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
+        <div class="col-lg-4 d-flex flex-column justify-content-center pt-4  order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
           <h1>A melhor solução para o monitoramento da sua saúde</h1>
           <h2>O site para você cuidar e prevenir sua vida</h2>
           <div class="d-flex justify-content-center justify-content-lg-start">
@@ -99,8 +99,8 @@
 			</i><span>Tutorial</span></a>
           </div>
         </div>
-        <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
-          <img src="img/hero-img.png" class="img-fluid animated" alt="">
+        <div class="col-lg-8 col-12 order-lg-1 order-1 hero-img" data-aos="zoom-in" data-aos-delay="200">
+          <img src="img/b3.png" class="img-fluid animated" alt="">
         </div>
       </div>
     </div>
@@ -170,7 +170,7 @@
 
           </div>
 
-          <div class="col-lg-5 align-items-stretch order-1 order-lg-2 img" style='background-image: url("img/why-us.png");' data-aos="zoom-in" data-aos-delay="150">&nbsp;</div>
+          <div class="col-lg-5 align-items-stretch order-1 order-lg-2 img" style='  background-image: url("img/why-uss.png"); ' data-aos="zoom-in" data-aos-delay="150">&nbsp;</div>
         </div>
 
       </div>
@@ -281,7 +281,7 @@
 
         <div class="section-title">
           <h2>Nosso Time</h2>
-          <p>aaaa</p>
+          <p>As desenvolvedoras desse projeto são alunas do ensino médio técnico, que escolheram o tema de monitoramento de saúde como tema de TCC</p>
         </div>
 
         <div class="row">
@@ -290,9 +290,9 @@
             <div class="member d-flex align-items-start" data-aos="zoom-in" data-aos-delay="100">
               <div class="pic"><img src="" class="img-fluid" alt=""></div>
               <div class="member-info">
-                <h4>manu</h4>
-                <span>programas</span>
-                <p>aa</p>
+                <h4>Emanuele Fernanda Ferraz de Araújo</h4>
+                <span>Desenvolvedora e escritora</span>
+                <p>Aluna do 4º ano do ensino médio com tecnico de informática integrado, do IFPR campus Pinhais  </p>
                 <div class="social">
                   <a href=""><i class="ri-twitter-fill"></i></a>
                   <a href=""><i class="ri-facebook-fill"></i></a>
@@ -307,9 +307,9 @@
             <div class="member d-flex align-items-start" data-aos="zoom-in" data-aos-delay="200">
               <div class="pic"><img src="" class="img-fluid" alt=""></div>
               <div class="member-info">
-                <h4>Sjuh</h4>
-                <span>escreve</span>
-                <p>aa</p>
+                <h4>Juliana Gonçalves Nascimento</h4>
+                <span>Desenvolvedora e escritora</span>
+                <p>Aluna do 4º ano do ensino médio com tecnico de informática integrado, do IFPR campus Pinhais</p>
                 <div class="social">
                   <a href=""><i class="ri-twitter-fill"></i></a>
                   <a href=""><i class="ri-facebook-fill"></i></a>
@@ -320,13 +320,13 @@
             </div>
           </div>
 
-          <div class="col-lg-6 mt-4">
-            <div class="member d-flex align-items-start" data-aos="zoom-in" data-aos-delay="300">
+          <div class=" col-lg-3 offset-lg-3 col-sm-6 offset-sm-6 col-md-6 offset-md-6 w-md-50 w-50 w-lg-100 w-sm-100 mt-4 ">
+            <div class=" member d-flex align-items-center" data-aos="zoom-in" data-aos-delay="300">
               <div class="pic"><img src="" class="img-fluid" alt=""></div>
               <div class="member-info">
-                <h4>helena</h4>
-                <span>escreve</span>
-                <p>aa</p>
+                <h4>Julia Helena Paes Cardoso</h4>
+                <span>Desenvolvedora e escritora</span>
+                <p>Aluna do 4º ano do ensino médio com tecnico de informática integrado, do IFPR campus Pinhais</p>
                 <div class="social">
                   <a href=""><i class="ri-twitter-fill"></i></a>
                   <a href=""><i class="ri-facebook-fill"></i></a>
@@ -366,7 +366,7 @@
 			  <i class="bx bx-chevron-up icon-close"></i></a>
               <div id="faq-list-2" class="collapse" data-bs-parent=".faq-list">
                 <p>
-                  Sim. confia
+                  Sim, as desenvolvedoras desse projeto usaram os melhores métodos para deixar seus dados seguros.
                 </p>
               </div>
             </li>
@@ -374,18 +374,20 @@
             <li data-aos="fade-up" data-aos-delay="300">
               <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-3" class="collapsed">Como funciona? <i class="bx bx-chevron-down icon-show"></i>
 			  <i class="bx bx-chevron-up icon-close"></i></a>
-              <div id="faq-list-3" class="collapse" data-bs-parent=".faq-list">
-                <p>
-                   Cadastro cadastro taebla filtro grafico
+              <div id="faq-list-3" class="collapse" data-bs-parent=".faq-list"> 
+			
+                <p >
+                  Temos um vídeo de tutorial do E-SAÚDE simples e rápido para você clique abaixo para ver! 
                 </p>
+				<a  style="margin-left:-3%; " href="">clique aqui</a>
               </div>
             </li>
-			<li data-aos="fade-up" data-aos-delay="300">
-              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-3" class="collapsed">Como faço para falar om as desenvolvedoras? <i class="bx bx-chevron-down icon-show"></i>
+			<li data-aos="fade-up" data-aos-delay="400">
+              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-4" class="collapsed">Como faço para falar om as desenvolvedoras? <i class="bx bx-chevron-down icon-show"></i>
 			  <i class="bx bx-chevron-up icon-close"></i></a>
-              <div id="faq-list-3" class="collapse" data-bs-parent=".faq-list">
+              <div id="faq-list-4" class="collapse" data-bs-parent=".faq-list">
                 <p>
-                   email
+                   As desenvolvedoras respondem pelo email esaude.suportecliente@gmail.com, mas também no formulário de contato abaixo
                 </p>
               </div>
             </li>
@@ -405,7 +407,7 @@
 
         <div class="section-title">
           <h2>Contato</h2>
-          <p>aaaaaaaaaaaaaaaaa</p>
+          <p>Envie uma sugestão ou pergunta</p>
         </div>
 
         <div class="row">
@@ -421,7 +423,7 @@
               <div class="email">
                 <i class="bi bi-envelope"></i>
                 <h4>Email:</h4>
-                <p>esaudesuportecliente@gmail.com</p>
+                <p>esaude.suportecliente@gmail.com</p>
               </div>
 
               <div class="phone">

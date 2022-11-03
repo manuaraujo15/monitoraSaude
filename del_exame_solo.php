@@ -13,7 +13,7 @@
 			$query = "DELETE FROM exame WHERE id='$id'";
 			mysqli_query($conexao, $query);
 			mysqli_close($conexao);
-			header("Location: update_exame.php");
+			header("Location: bd_exame.php");
 		
 	}
 ?>		

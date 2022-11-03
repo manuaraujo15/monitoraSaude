@@ -3,7 +3,16 @@
 	if (strcmp($_SESSION['login'], $_SESSION['login-post']) == 0) {
 		session_destroy();
 		header("Location: cad_usuario.php");
+		
 	}
+?>
+<?php  
+	include("conexao.php");
+		
+		$query = "SELECT * FROM valores_exame";
+		$resultados = mysqli_query($conexao, $query);
+		$valores = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
+		//var_dump($valores);
 ?>
 <?php 
 	include('conexao.php');
@@ -24,10 +33,10 @@
 	}
  if (!empty($_POST['data_exame']) and !empty($_POST['nome_exame'])and !empty($_POST['valor_exame'])) {
 		
-		$data_exame = strtolower($_POST['data_exame']);
-		$nome_exame = strtolower($_POST['nome_exame']);
-		$valor_exame = strtolower($_POST['valor_exame']);
-		$id_usuario = strtolower($_SESSION['id_usuario']);
+		$data_exame = $_POST['data_exame'];
+		$nome_exame = $_POST['nome_exame'];
+		$valor_exame = $_POST['valor_exame'];
+		$id_usuario = $_SESSION['id_usuario'];
 		include("conexao.php");
 		//var_dump ("$id_usuario");
 		$query = "INSERT INTO exame (data_exame, nome_exame, valor_exame, id_usuario ) VALUES ('$data_exame','$nome_exame','$valor_exame', '$id_usuario')";
@@ -84,14 +93,34 @@
 							}
 						 ?> 
 						<br>
-							<label for="nome_exame" class="form-label align-baseline  "><strong>Digite o nome do exame: </strong> </label>
-							<input class="form-control  " type="text" name="nome_exame" 
+						
+						
+							<label for="nome_exame" class="form-label align-baseline  "><strong>Digite o nome do exame: </strong> </label>	<br>
+							<select class="referencia-select form-select h2" name="nome_exame" id="autocomplete">
+								
+								<option class="h2" value=""> 
+								<?php
+								 foreach ($valores as $valor) {  ?>
+								<option  class="h4" value="<?php echo $valor['valor_nome']?>"> <?php echo $valor['valor_nome'];?></option> <?php }  ?>  
+								
+								<script>
+								var tags = [ <?php foreach ($valores as $valor) { echo $valor['valor_nome']; } ?>];
+								$( "#autocomplete" ).autocomplete({
+								  source: function( request, response ) {
+										  var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
+										  response( $.grep( tags, function( item ){
+											  return matcher.test( item );
+										  }) );
+									  }
+								});
+								</script>
+								</select>
 							<?php
 							if(!empty($_SESSION['value_nome'])){
 								echo "value='".$_SESSION['value_nome']."'";
 								unset($_SESSION['value_nome']);
 							}
-						 ?>	>
+						 ?>	
 						 <?php
 							if(!empty($_SESSION['nome_exame'])){
 								echo "<p style='color: #f00; '>".$_SESSION['nome_exame']."</p>";

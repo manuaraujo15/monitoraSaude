@@ -128,6 +128,7 @@
   </head>
 	<body class="text-decoration-none">
 	 <?php include 'header.php';?>
+	 <br><br>
 			<div class=" container-cad form-group ml-xl-5 ">
 
 			<form action="cad_usuario.php" method="POST" class="ml-xl-5 pr-xl-5 mt-xl-2" >

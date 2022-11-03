@@ -1,3 +1,11 @@
+<?php  
+	include("conexao.php");
+		
+		$query = "SELECT * FROM valores_exame";
+		$resultados = mysqli_query($conexao, $query);
+		$valores = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
+		//var_dump($valores);
+?>
 <?php
 		if (isset($_GET['id'])) {
 		include("conexao.php");
@@ -65,7 +73,27 @@
 					 
 				echo "<br>";
 				echo "<label for='nome_exame' class='form-label align-baseline'>Digite o nome do exame:  </label>";
-				echo "<input class='form-control'  lang='pt' type='text' name='nome_exame' id='nome_exame' value= '$nome_exame'/>";
+				echo "<br>";
+						?>	<select class="referencia-select form-select" name="nome_exame" id="autocomplete">
+								
+								<option value="$nome_exame"> 
+								<?php
+								 foreach ($valores as $valor) {  ?>
+								<option value="<?php echo $valor['valor_nome']?>"> <?php echo $valor['valor_nome'];?></option> <?php }  ?>  
+								
+								<script>
+								var tags = [ <?php foreach ($valores as $valor) { echo $valor['valor_nome']; } ?>];
+								$( "#autocomplete" ).autocomplete({
+								  source: function( request, response ) {
+										  var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
+										  response( $.grep( tags, function( item ){
+											  return matcher.test( item );
+										  }) );
+									  }
+								});
+								</script>
+								</select>
+								<?php
 				echo "<br>"; 
 				
 				echo "<label for='valor_exame' class='form-label align-baseline'>Digite o valor do exame: </label>";

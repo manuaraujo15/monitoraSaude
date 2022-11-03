@@ -11,14 +11,14 @@
     <title>Seus Exames</title>
     <meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css"  href="css/mainn.css" >
+	<link rel="stylesheet" type="text/css"  href="css/main.css" >
 
   </head>
   <body>
   	<?php include 'header.php';?>
 	 
 		<script>
-			function confirmarDelecao(id,nome_exame){
+			function confirmarDelecao(nome_exame,nome_exame){
 				var resposta = confirm("Tem certeza que deseja deletar a linha inteira "+nome_exame+"?");
 				if (resposta) {
 					window.location.href = 'http://localhost/monitoraSaude/del_exame.php?nome_exame='+nome_exame;
@@ -36,8 +36,8 @@
 					window.location.href = 'http://localhost/monitoraSaude/update_exame.php?id_usuario='+id_usuario+'&nome_exame='+nome_exame;
 				}
 			}
+			</script>
 			
-		</script>
 		
 	<h1 class="title-bd">Tabela de exames</h1>
 		<?php echo "<div class='bemvindo' <i>Bem vindo(a) <b>".$_SESSION['nome_usuario']."!</b></i></div>"; ?>
@@ -50,19 +50,29 @@
 			$query = "SELECT id, nome_exame,data_exame,valor_exame  FROM exame WHERE id_usuario = '$id_usuario' ORDER BY data_exame ASC";
 			$resultados = mysqli_query($conexao, $query);
 			$exame = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
-			$query = "SELECT DISTINCT id,data_exame  FROM exame WHERE id_usuario = '$id_usuario' ORDER BY data_exame ASC";
+			
+			$query = "SELECT DISTINCT id,data_exame  FROM exame WHERE id_usuario = '$id_usuario' GROUP BY data_exame";
 			$resultados = mysqli_query($conexao, $query);
 			$data = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
-			$query = "SELECT   id,data_exame  FROM exame WHERE id_usuario = '$id_usuario' ORDER BY data_exame ASC";
+			
+			$query = "SELECT data_exame  FROM exame WHERE id_usuario = '$id_usuario'  GROUP BY data_exame";
 			$resultados = mysqli_query($conexao, $query);
 			$dataa = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
-			$query = "SELECT id,nome_exame  FROM exame WHERE id_usuario = '$id_usuario' ORDER BY data_exame ASC";
+			
+			$query = "SELECT id,nome_exame  FROM exame WHERE id_usuario = '$id_usuario' GROUP BY nome_exame";
 			$resultados = mysqli_query($conexao, $query);
 			$nome = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
-			$query = "SELECT   nome_exame  FROM exame WHERE id_usuario = '$id_usuario' ORDER BY data_exame ASC ";
+			
+			$query = "SELECT nome_exame  FROM exame WHERE id_usuario = '$id_usuario'  GROUP BY nome_exame";
 			$resultados = mysqli_query($conexao, $query);
 			$nomes = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
-			
+		
+		
+		$query = "SELECT valor_nome FROM valores_exame";
+		$resultados = mysqli_query($conexao, $query);
+		$valores = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
+	//	var_dump($valores);
+
 			function array2($array){
 						foreach ($array as $key1 => $a1)
 						{
@@ -81,7 +91,7 @@
 					$dataa = array_map('array2', $dataa);
 					 if(in_array($filtro, $dataa, TRUE)){
 						$filtro = implode("-",array_reverse(explode("/",$filtro)));
-						$query1 = "SELECT id,nome_exame,data_exame,valor_exame FROM exame WHERE id_usuario = '$id_usuario'&& data_exame = '$filtro'ORDER BY data_exame ASC  ";
+						$query1 = "SELECT nome_exame,data_exame,valor_exame FROM exame WHERE id_usuario = '$id_usuario'&& data_exame = '$filtro'ORDER BY data_exame ASC  ";
 						$resultados = mysqli_query($conexao, $query1);
 						$exame 	= mysqli_fetch_all($resultados, MYSQLI_ASSOC);
 						//var_dump( $exame);
@@ -91,10 +101,10 @@
 						  $filtros = $_POST['filtros'];
 							$nomes = array_map('array2', $nomes);
 							 if(in_array($filtros, $nomes, TRUE)){
-								$query1 = "SELECT id,nome_exame,data_exame,valor_exame FROM exame WHERE id_usuario = '$id_usuario'&& nome_exame = '$filtros' ORDER BY data_exame ASC ";
+								$query1 = "SELECT nome_exame,data_exame,valor_exame FROM exame WHERE id_usuario = '$id_usuario'&& nome_exame = '$filtros' ORDER BY data_exame ASC ";
 								$resultados = mysqli_query($conexao, $query1);
 								$exame 	= mysqli_fetch_all($resultados, MYSQLI_ASSOC);
-								//var_dump( $exame);
+								
 								
 					}
 					 }else{
@@ -111,7 +121,7 @@
 			
 			<option value=""> 
 			<?php
-			 foreach ($nome as $res) { ?>
+			 foreach ($nome as $res) {  ?>
 			<option value="<?php echo $res['nome_exame']?>"> <?php echo $res['nome_exame'];?></option> <?php }  ?>  
 			</select>
 						<div class="div-filtro">
@@ -139,7 +149,7 @@
 	
 						$grouped = [];
 						$columns = [];
-						$value = [];
+					
 						echo "<table class='table' id='tabela'>";
 						foreach ($exame as $row) {
 							$nome_exame = $row['nome_exame'];
@@ -157,7 +167,7 @@
 						$defaults = array_fill_keys($columns, '-');
 						
 						
-						echo "<div class='ScrollDiv'>";
+						echo "<div class='ScrollDiv' id='ScrollDiv'>";
 						
 							printf(
 								"<tr class='head'><td class='cedula'>&nbsp;</td><td class='cedula'>%s</td></tr>",
@@ -165,11 +175,11 @@
 							);
 							foreach ($grouped as $nome_exame => $records) {
 							//var_dump($nome_exame);
-								
-							$buttons = "<button class='botao-atualiza' onClick ='confirmarAtualizar($id_usuario, `$nome_exame`)'>Atualizar</button>";
+								$buttons2 = "<button class='botao-deleta'   onClick ='confirmarDelecao(`$nome_exame`,`$nome_exame`)'>Deletar</button>";
+								$buttons = "<button class='botao-atualiza' onClick ='confirmarAtualizar($id_usuario, `$nome_exame`)'>Atualizar</button>";
 							
 							//var_dump($nome);
-								$buttons2 = "<button class='botao-deleta'  onClick ='confirmarDelecao($nome_exame, `$nome_exame`)'>Deletar</button>";
+								
 								printf(
 									"<tr class='row' id='row'><td class='cedula'>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>\n",
 									$nome_exame,
@@ -207,6 +217,7 @@
 			</div>
 				</form>
 			<br><br>
+			
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script>
       google.charts.load('current', {'packages':['corechart']});
@@ -214,9 +225,7 @@
  
     function drawChart() {
       var data1 = google.visualization.arrayToDataTable([
-				[{label: 'Data do exame', type: 'string'},
-                 {label: 'Valor do exame', type: 'number'}
-                ],    
+				 ['Data', 'Valor do Exame', { role: 'annotation'} ,' Valor de Referência', { role: 'annotation'}],  
 				
         <?php
 			
@@ -228,19 +237,24 @@
 						$resultado = mysqli_query($conexao, $query1);
 						$exame 	= mysqli_fetch_all($resultado, MYSQLI_ASSOC);
 						 foreach($exame as $dados){
-							$a = $dados['data_exame'];
-							$b = $dados['valor_exame'];
+							$datae = $dados['data_exame'];
+							$valore = $dados['valor_exame'];
 							$_SESSION['nome'] = $dados['nome_exame'];
-							$a = strtotime($a);
-							$a = date("d/m/Y",$a);
+							$datae = strtotime($datae);
+							$datae = date("d/m/Y",$datae);
+							$valoref= array_map('array2', $valores);
+			if(in_array($graficof, $valoref, TRUE)){
+									$query = "SELECT valor_nome, min_valor, max_valor FROM valores_exame WHERE valor_nome = '$graficof'";
+									$resultados = mysqli_query($conexao, $query);
+			   $valorref = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
+			  // var_dump($valor_ref);
+			   foreach($valorref as $dados){
+							$minvalor = $dados['min_valor'];
+							
          ?>
-		 ['<?php echo $a ?>',<?php echo $b ?>],
-
-					<?php }}}else{
-						$query = "SELECT nome_exame,data_exame,valor_exame FROM exame WHERE id_usuario = '$id_usuario' ORDER BY data_exame ASC";
-						$resultados = mysqli_query($conexao, $query);
-						$exame 	= mysqli_fetch_all($resultados, MYSQLI_ASSOC);
-				}
+		
+ ['<?php echo $datae ?>',  <?php echo $valore ?>,'<?php echo $valore ?>',      <?php echo $minvalor ?>, '<?php echo $minvalor ?>'],
+	   <?php }}}}}
 			?>
 
       ]);
@@ -264,15 +278,19 @@
   }
   
   </script>
+  
   <script>
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
  
     function drawChart() {
       var data = google.visualization.arrayToDataTable([
-				[{label: 'Data do exame', type: 'string'},
-                 {label: 'Valor do exame', type: 'number'},
-                 { role: 'annotation' }],    
+	   ['Data', 'Valor do Exame', { role: 'annotation'} ,' Valor de Referência', { role: 'annotation'}],
+
+				//[{label: 'Data do exame', type: 'string'},
+                 //{label: 'Valor do exame', type: 'number'},
+				 //{ role: 'annotation' }, 
+				// { role: 'annotation' }],    
 				
         <?php
 			
@@ -283,20 +301,29 @@
 						$resultado = mysqli_query($conexao, $query1);
 						$exame 	= mysqli_fetch_all($resultado, MYSQLI_ASSOC);
 						 foreach($exame as $dados){
-							$a = $dados['data_exame'];
-							$b = $dados['valor_exame'];
+							$date = $dados['data_exame'];
+							$valor = $dados['valor_exame'];
 							$_SESSION['nome'] = $dados['nome_exame'];
-
-							$a = strtotime($a);
-							$a = date("d/m/Y",$a);
+							$date = strtotime($date);
+							$date = date("d/m/Y",$date);
+							
+			if(in_array($graficof, $valoref, TRUE)){
+									$query = "SELECT valor_nome, min_valor, max_valor FROM valores_exame WHERE valor_nome = '$graficof'";
+									$resultados = mysqli_query($conexao, $query);
+			   $valor_ref = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
+			  // var_dump($valor_ref);
+			   foreach($valor_ref as $dados){
+							$min_valor = $dados['min_valor'];
+			   
+			   
+		
+							
          ?>
-		 ['<?php echo $a ?>',<?php echo $b ?>,<?php echo $b ?>],
+		    ['<?php echo $date ?>',  <?php echo $valor ?>,'<?php echo $valor ?>',      <?php echo $min_valor ?>, '<?php echo $min_valor ?>'],
+		 //['<?php echo $date ?>',<?php echo $valor ?>,<?php echo $valor ?>,'<?php echo $min_valor ?>'],
 
-					<?php }}}else{
-						$query = "SELECT  nome_exame,data_exame,valor_exame FROM exame WHERE id_usuario = '$id_usuario' ORDER BY data_exame ASC";
-						$resultados = mysqli_query($conexao, $query);
-						$exame 	= mysqli_fetch_all($resultados, MYSQLI_ASSOC);
-				}
+	   <?php }}}}}
+						
 			?>
 
       ]);
@@ -311,6 +338,9 @@
 		  hAxis: {title: 'Data do Exame'},
 		  vAxis: {title: 'Valor do Exame'},
 		    bar: {groupWidth: "40%"},
+			 annotations: {
+          alwaysOutside: true,
+			 }
 			
         };
  
