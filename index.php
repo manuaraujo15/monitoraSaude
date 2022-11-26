@@ -95,7 +95,7 @@
           <h2>O site para você cuidar e prevenir sua vida</h2>
           <div class="d-flex justify-content-center justify-content-lg-start">
             <a href="cad_usuario.php" class="btn-get-started scrollto">Entre ou Cadastre-se</a>
-            <a href="" class="glightbox btn-watch-video"><i class="bi bi-play-circle">
+            <a href="comoUsar.php" class="glightbox btn-watch-video"><i class="bi bi-play-circle">
 			</i><span>Tutorial</span></a>
           </div>
         </div>
@@ -276,71 +276,7 @@
 
       </div>
 <?php include 'noticias.html';?>
-  <section id="team" class="team section-bg">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Nosso Time</h2>
-          <p>As desenvolvedoras desse projeto são alunas do ensino médio técnico, que escolheram o tema de monitoramento de saúde como tema de TCC</p>
-        </div>
-
-        <div class="row">
-
-          <div class="col-lg-6">
-            <div class="member d-flex align-items-start" data-aos="zoom-in" data-aos-delay="100">
-              <div class="pic"><img src="" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>Emanuele Fernanda Ferraz de Araújo</h4>
-                <span>Desenvolvedora e escritora</span>
-                <p>Aluna do 4º ano do ensino médio com tecnico de informática integrado, do IFPR campus Pinhais  </p>
-                <div class="social">
-                  <a href=""><i class="ri-twitter-fill"></i></a>
-                  <a href=""><i class="ri-facebook-fill"></i></a>
-                  <a href=""><i class="ri-instagram-fill"></i></a>
-                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-6 mt-4 mt-lg-0">
-            <div class="member d-flex align-items-start" data-aos="zoom-in" data-aos-delay="200">
-              <div class="pic"><img src="" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>Juliana Gonçalves Nascimento</h4>
-                <span>Desenvolvedora e escritora</span>
-                <p>Aluna do 4º ano do ensino médio com tecnico de informática integrado, do IFPR campus Pinhais</p>
-                <div class="social">
-                  <a href=""><i class="ri-twitter-fill"></i></a>
-                  <a href=""><i class="ri-facebook-fill"></i></a>
-                  <a href=""><i class="ri-instagram-fill"></i></a>
-                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class=" col-lg-3 offset-lg-3 col-sm-6 offset-sm-6 col-md-6 offset-md-6 w-md-50 w-50 w-lg-100 w-sm-100 mt-4 ">
-            <div class=" member d-flex align-items-center" data-aos="zoom-in" data-aos-delay="300">
-              <div class="pic"><img src="" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>Julia Helena Paes Cardoso</h4>
-                <span>Desenvolvedora e escritora</span>
-                <p>Aluna do 4º ano do ensino médio com tecnico de informática integrado, do IFPR campus Pinhais</p>
-                <div class="social">
-                  <a href=""><i class="ri-twitter-fill"></i></a>
-                  <a href=""><i class="ri-facebook-fill"></i></a>
-                  <a href=""><i class="ri-instagram-fill"></i></a>
-                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section><!-- End Team Section -->
-
+  
     <!-- ======= Frequently Asked Questions Section ======= -->
     <section id="faq" class="faq section-bg">
       <div class="container" data-aos="fade-up">
@@ -399,7 +335,7 @@
       </div>
     </section><!-- End Frequently Asked Questions Section -->
 	
-  </main><!-- End #main -->
+ <!-- End #main -->
   <!-- ======= Footer ======= -->
       <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact">
@@ -471,6 +407,7 @@
 
       </div>
     </section><!-- End Contact Section -->
+	 </main>
   <footer id="footer">
 
    
@@ -478,10 +415,9 @@
     <div class="footer-top">
       <div class="container">
         <div class="row">
-
           <div class="col-lg-3 col-md-6 footer-contact">
             <h3  id="h3-footer"> <img src="logo11.png" id="logo-footer">E-Saúde</h3>
-              <p id="p-footer"><strong id="strong-footer">Email:</strong> esaude.suportecliente@gmail.com<br> </p>           
+                       
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@
   <head>
     <title>Monitora Saúde</title>
     <meta charset="utf-8">
-	<link rel="stylesheet" type="text/css"  href="css/main.css" >
+	<link rel="stylesheet" type="text/css"  href="css/mainnn.css" >
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,700,1,200" >
 	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
@@ -26,10 +26,11 @@
 					<span class="material-symbols-rounded" class="close">close</span>
 				</label>
 				<a class="textbar" href="index.php">Home</a>
-				<a class="textbar" href="">Como usar</a> 
-				<a class="textbar" href="cad_usuario.php">Entre ou Cadastre-se</a>			
+				<a class="textbar" href="comoUsar.php">Como usar</a> 
 				<a class="textbar" href="bd_exame.php">Seus exames</a>
-				<a class="textbar" href="index.php#contact">Contato</a>
+				<a class="textbar" href="cad_exame.php">Cadastre seus exames</a>
+				<a class="textbar" href="area_medica.php">Área Médica</a>
+				<a class="textbar" href="cad_usuario.php">Entre ou Cadastre-se</a>
 				<a class="textbar" class="btn_icon_logout"  id="logout" onclick="logout()" >
 					<span class="material-symbols-rounded"  type="button" >logout</span>
 				</a>

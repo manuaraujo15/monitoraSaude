@@ -118,8 +118,8 @@
   <head>
     <meta charset="utf-8">
     <title>	Cadastro de Usuário</title>
-		<link rel="stylesheet" type="text/css"  href="css/mainn.css" >
-		<link rel="stylesheet" type="text/css"  href="css/header.css" >
+		
+		
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
@@ -127,13 +127,13 @@
 		
   </head>
 	<body class="text-decoration-none">
-	 <?php include 'header.php';?>
+	 <?php include 'headercad.php';?>
 	 <br><br>
 			<div class=" container-cad form-group ml-xl-5 ">
 
 			<form action="cad_usuario.php" method="POST" class="ml-xl-5 pr-xl-5 mt-xl-2" >
 				<div class="form-group col-xl-5  float-xl-left  pr-xl-5 ml-xl-5  mr-xl-0 border-right border-dark-xl-5 h-xl-5 ">
-				<br>
+				
 					<h4 class=""><strong>Quero criar uma conta</strong></h4> 
 					<label for="nome" class="form-label">Nome: </label>
 					<input class="form-control" type="text" name="nome" id="nome"

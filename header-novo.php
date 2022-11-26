@@ -34,12 +34,12 @@
      
 				<ul>
 				  <li><a class="nav-link scrollto " href="index.php">Home</a></li>
-				  <li><a class="nav-link scrollto" href="">Como usar</a></li> 
+				  <li><a class="nav-link scrollto" href="comoUsar.php">Como usar</a></li> 
+				  <li><a class="nav-link scrollto" href="cad_exame.php">Cadastre seus exames</a></li> 			
+				  <li><a class="nav-link scrollto" href="bd_exame.php">Seus exames</a></li> 
+				  <li><a class="nav-link scrollto" href="area_medica.php">Área Médica</a></li>				  
+				  
 				  <li><a class="nav-link scrollto" href="cad_usuario.php">Entre ou Cadastre-se</a></li>
-				  <li><a class="nav-link scrollto" href="bd_exame.php">Seus exames</a></li>
-				  
-				  <li><a class="nav-link scrollto" href="index.php#contact">Contato</a></li>
-				  
 				 <li><a class="btn_icon_logout"  id="logout" onclick="logout()"> <span class="material-symbols-rounded"  type="button">logout</a></span>
 				</ul> 
 			  </nav><!-- .navbar -->

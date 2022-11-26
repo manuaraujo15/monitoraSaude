@@ -79,7 +79,7 @@
 								<option value="$nome_exame"> 
 								<?php
 								 foreach ($valores as $valor) {  ?>
-								<option value="<?php echo $valor['valor_nome']?>"> <?php echo $valor['valor_nome'];?></option> <?php }  ?>  
+								<option value="<?php echo $valor['valor_nome']?>"> <?php echo $valor['valor_nome']; ?></option> <?php }  ?>  
 								
 								<script>
 								var tags = [ <?php foreach ($valores as $valor) { echo $valor['valor_nome']; } ?>];

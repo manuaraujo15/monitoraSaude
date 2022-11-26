@@ -11,85 +11,80 @@
     <title>Seus Exames</title>
     <meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css"  href="css/main.css" >
-
+	<link rel="stylesheet" type="text/css"  href="css/mainnn.css" >
   </head>
-  <body>
-  	<?php include 'header.php';?>
-	 
-		<script>
-			function confirmarDelecao(nome_exame,nome_exame){
-				var resposta = confirm("Tem certeza que deseja deletar a linha inteira "+nome_exame+"?");
-				if (resposta) {
-					window.location.href = 'http://localhost/monitoraSaude/del_exame.php?nome_exame='+nome_exame;
-				}
-			}
-			
-		</script>
-		<script>
-			function confirmarAtualizar(id_usuario,nome_exame){
-				
-				var resposta = confirm("Tem certeza que deseja atualizar a linha inteira "+nome_exame+"?");
-				
-				if (resposta) {
-				
-					window.location.href = 'http://localhost/monitoraSaude/update_exame.php?id_usuario='+id_usuario+'&nome_exame='+nome_exame;
-				}
-			}
+	<body>
+		<?php include 'header.php';?> 
+			<script>
+				function confirmarDelecao(nome_exame,nome_exame){
+					var resposta = confirm("Tem certeza que deseja deletar a linha inteira "+nome_exame+"?");
+					if (resposta) {
+						window.location.href = 'http://localhost/monitoraSaude/del_exame.php?nome_exame='+nome_exame;
+					}
+				}				
 			</script>
-			
-		
-	<h1 class="title-bd">Tabela de exames</h1>
-		<?php echo "<div class='bemvindo' <i>Bem vindo(a) <b>".$_SESSION['nome_usuario']."!</b></i></div>"; ?>
-				<br>
-
-		<?php
-			include("conexao.php");
-			$login = $_SESSION['login'];
+			<script>
+				function confirmarAtualizar(id_usuario,nome_exame){
+					window.location.href = 'http://localhost/monitoraSaude/update_exame.php?id_usuario='+id_usuario+'&nome_exame='+nome_exame;					
+				}
+				</script>		
+		<h1 class="title-bd">Tabela de exames</h1>	
+			<?php echo "<div class='bemvindo' <i>Bem vindo(a) <b>".$_SESSION['nome_usuario']."!</b></i></div>"; ?>
+					<br>
+			<?php
+	
+		include("conexao.php");
 			$id_usuario = $_SESSION['id_usuario'];
-			$query = "SELECT id, nome_exame,data_exame,valor_exame  FROM exame WHERE id_usuario = '$id_usuario' ORDER BY data_exame ASC";
+			//$_SESSION['id_usuario'] = $dados['valor_nome'];
+		//	var_dump($id_usuario);
+		
+			$query = "SELECT id, nome_exame,data_exame,valor_exame,id_usuario  FROM exame WHERE id_usuario = '$id_usuario' ORDER BY data_exame ASC";
 			$resultados = mysqli_query($conexao, $query);
 			$exame = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
-			
+			//var_dump($exame);	
 			$query = "SELECT DISTINCT id,data_exame  FROM exame WHERE id_usuario = '$id_usuario' GROUP BY data_exame";
 			$resultados = mysqli_query($conexao, $query);
-			$data = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
+			$data_filtro = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
 			
 			$query = "SELECT data_exame  FROM exame WHERE id_usuario = '$id_usuario'  GROUP BY data_exame";
 			$resultados = mysqli_query($conexao, $query);
-			$dataa = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
+			$data = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
 			
 			$query = "SELECT id,nome_exame  FROM exame WHERE id_usuario = '$id_usuario' GROUP BY nome_exame";
 			$resultados = mysqli_query($conexao, $query);
-			$nome = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
+			$nome_filtro = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
 			
 			$query = "SELECT nome_exame  FROM exame WHERE id_usuario = '$id_usuario'  GROUP BY nome_exame";
 			$resultados = mysqli_query($conexao, $query);
 			$nomes = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
 		
 		
-		$query = "SELECT valor_nome FROM valores_exame";
-		$resultados = mysqli_query($conexao, $query);
-		$valores = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
+			$query = "SELECT valor_nome FROM valores_exame";
+			$resultados = mysqli_query($conexao, $query);
+			$valores = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
+			
 	//	var_dump($valores);
 
 			function array2($array){
-						foreach ($array as $key1 => $a1)
+						foreach ($array as $key => $value)
 						{
-						 $a1 = implode("/",array_reverse(explode("-",$a1)));
+						 $value = implode("/",array_reverse(explode("-",$value)));
 
 						}
-						return $a1;
+						return $value;
 					}	
 					?>
 					
 		
-			<?php	
+						<p class='token-box'> O CÓDIGO para o médico acessar os exames é <strong><?php echo $id_usuario ?></strong></p>
+					<br><br><br>
+					
+				<?php	
 					
 				if (!empty($_POST['filtro']) || !empty($_POST['filtros'])) {	
 				  $filtro = $_POST['filtro'];
-					$dataa = array_map('array2', $dataa);
-					 if(in_array($filtro, $dataa, TRUE)){
+					$data = array_map('array2', $data);
+					 if(in_array($filtro, $data, TRUE)){
 						$filtro = implode("-",array_reverse(explode("/",$filtro)));
 						$query1 = "SELECT nome_exame,data_exame,valor_exame FROM exame WHERE id_usuario = '$id_usuario'&& data_exame = '$filtro'ORDER BY data_exame ASC  ";
 						$resultados = mysqli_query($conexao, $query1);
@@ -112,16 +107,16 @@
 						$resultados = mysqli_query($conexao, $query);
 						$exame 	= mysqli_fetch_all($resultados, MYSQLI_ASSOC);
 				}
-			?>
+				?>
 			
 			
-			<form class='filtross' action="bd_exame.php" method="POST">
+			<form class='filtross' action="bd_exame.php?" method="POST">
 				Filtrar nome:
 			<select class="grafico-select" name="filtros">
 			
 			<option value=""> 
 			<?php
-			 foreach ($nome as $res) {  ?>
+			 foreach ($nome_filtro as $res) {  ?>
 			<option value="<?php echo $res['nome_exame']?>"> <?php echo $res['nome_exame'];?></option> <?php }  ?>  
 			</select>
 						<div class="div-filtro">
@@ -131,7 +126,7 @@
 			
 			<option class="grafico-option" value=""> 
 			<?php
-				 foreach ($data as $res) { 
+				 foreach ($data_filtro as $res) { 
 				// var_dump( $data);
 				 //				var_dump( $res);
 
@@ -144,8 +139,7 @@
 				</div>
 				</form>				
 
-
-	<?php
+<?php
 	
 						$grouped = [];
 						$columns = [];
@@ -195,171 +189,196 @@
 							
 		?>
 		
-		
-								
-			<br>
-			<br>
-			<a type="button" class="b-cad" href="cad_exame.php">Cadastra novo exame</a>
-				
-		<form class="grafico-form" action="bd_exame.php" method="POST">
-		<h1 class="t-grafico">Monte seu Gráfico</h1>
-		<br>
-		<br>
-				<div class="grafico-filtro"><h3> Selecione o exame:
-			<select class="grafico-select" name="grafico-f">
-			</h3>
-			<option value=""> 
-			<?php
-			 foreach ($nome as $res) { ?>
-			<option value="<?php echo $res['nome_exame']?>"> <?php echo $res['nome_exame'];?></option> <?php }  ?>  
-			</select>
-			<input class="btn-filtro" type="submit"  value="Filtrar"/>
-			</div>
-				</form>
-			<br><br>
+				<br>
+				<br>
+				<a type="button" class="b-cad" href="cad_exame.php">Cadastra novo exame</a>
+					
+					<form class="grafico-form" action="bd_exame.php" method="POST">
+				<h1 class="t-grafico">Monte seu Gráfico</h1>
+				<br>
+				<br>
+						<div class="grafico-filtro"><h3> Selecione o exame:
+					<select class="grafico-select" name="grafico-f">
+					</h3>
+					<option value=""> 
+					<?php
+					 foreach ($nome_filtro as $res) { ?>
+					<option value="<?php echo $res['nome_exame']?>"> <?php echo $res['nome_exame'];?></option> <?php }  ?>  
+					</select>
+					<input class="btn-filtro" type="submit"  value="Filtrar"/>
+					</div>
+						</form>
+					<br><br>
 			
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <script>
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
- 
-    function drawChart() {
-      var data1 = google.visualization.arrayToDataTable([
-				 ['Data', 'Valor do Exame', { role: 'annotation'} ,' Valor de Referência', { role: 'annotation'}],  
-				
-        <?php
-			
-       if (!empty($_POST['grafico-f'])) {	
-					$graficof = $_POST['grafico-f'];
-					$nomes = array_map('array2', $nomes);
-					if(in_array($graficof, $nomes, TRUE)){
-						$query1 = "SELECT nome_exame,data_exame,valor_exame FROM exame WHERE id_usuario = '$id_usuario'&& nome_exame = '$graficof' ORDER BY data_exame ASC ";
-						$resultado = mysqli_query($conexao, $query1);
-						$exame 	= mysqli_fetch_all($resultado, MYSQLI_ASSOC);
-						 foreach($exame as $dados){
-							$datae = $dados['data_exame'];
-							$valore = $dados['valor_exame'];
-							$_SESSION['nome'] = $dados['nome_exame'];
-							$datae = strtotime($datae);
-							$datae = date("d/m/Y",$datae);
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	  <script>
+		  google.charts.load('current', {'packages':['corechart']});
+		  google.charts.setOnLoadCallback(drawChart);
+		function drawChart() {
+		<?php 
+			$max = [];
+			$min = [];	
+			$vir = ',';	
+		    if (!empty($_POST['grafico-f'])) {	
+						$graficof = $_POST['grafico-f'];
+						$nomes = array_map('array2', $nomes);
+						if(in_array($graficof, $nomes, TRUE)){
+							$query1 = "SELECT nome_exame,data_exame,valor_exame FROM exame WHERE id_usuario = '$id_usuario'&& nome_exame = '$graficof' ORDER BY data_exame ASC ";
+							$resultado = mysqli_query($conexao, $query1);
+							$exame 	= mysqli_fetch_all($resultado, MYSQLI_ASSOC);							 
 							$valoref= array_map('array2', $valores);
-			if(in_array($graficof, $valoref, TRUE)){
-									$query = "SELECT valor_nome, min_valor, max_valor FROM valores_exame WHERE valor_nome = '$graficof'";
-									$resultados = mysqli_query($conexao, $query);
-			   $valorref = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
-			  // var_dump($valor_ref);
-			   foreach($valorref as $dados){
-							$minvalor = $dados['min_valor'];
-							
-         ?>
-		
- ['<?php echo $datae ?>',  <?php echo $valore ?>,'<?php echo $valore ?>',      <?php echo $minvalor ?>, '<?php echo $minvalor ?>'],
-	   <?php }}}}}
-			?>
-
-      ]);
- 
-      
-      var options = {
-          title: 'Gráfico em linha do exame de <?php if (!empty($_POST['grafico-f'])) {	echo $_SESSION['nome'];}?>',
-		  responsive: true,
-          curveType: 'function',
-		   pointSize:7	,
-          legend: 'none',
-		  hAxis: {title: 'Data do Exame'},
-		  vAxis: {title: 'Valor do Exame'},
-		   
+							if(in_array($graficof, $valoref, TRUE)){
+								$query = "SELECT valor_nome, min_valor, max_valor FROM valores_exame WHERE valor_nome = '$graficof'";
+								$resultados = mysqli_query($conexao, $query);
+								$valorref = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
+								foreach($valorref as $dados){
+									$_SESSION['nome'] = $dados['valor_nome'];
+									$min_valor = $dados['min_valor'];			
+									$max_valor = $dados['max_valor'];
+									$max[$max_valor] = $dados['max_valor'];
+									$min[$min_valor] =  $dados['min_valor'];
+								}	
+							}
+						}
+								
+			 ?>
+				var data_linha = google.visualization.arrayToDataTable([
+				['Data', 'Valor do Exame', { role: 'annotation'} <?php if($min[$min_valor] == null ){?>, ' Valor maximo de Referência', { role: 'annotation'}
+				<?php }if($max[$max_valor] == null){?>,' Valor mínimo de Referência', { role: 'annotation'}
+				<?php }elseif($min[$min_valor] != null AND $max[$max_valor] != null ){?>, ' Valor mínimo de Referência', { role: 'annotation'},' Valor maximo de Referência', { role: 'annotation'}<?php }?>],
+			<?php
+				foreach($exame as $dados){
+					$datae = $dados['data_exame'];
+					$valore = $dados['valor_exame'];							
+					$datae = strtotime($datae);
+					$datae = date("d/m/Y",$datae);
+					$daata = $datae;						
+					foreach($valorref as $dados){
+						$_SESSION['nome'] = $dados['valor_nome'];
+						$max[$max_valor] = $dados['max_valor'];
+						$min[$min_valor] =  $dados['min_valor'];
+						$minvalor = $dados['min_valor'];			
+						$maxvalor = $dados['max_valor'];
+				?>
 			
-        };
- 
-        var chart = new google.visualization.LineChart(document.getElementById('grafico-linha'));
- 
-        chart.draw(data1, options);
-  }
-  
-  </script>
+				['<?php echo $daata ?>',  <?php echo $valore ?>, '<?php echo $valore ?>' <?php if($max[$max_valor] == null){echo $vir; echo $min[$min_valor];echo $vir; } ?>
+				<?php if($max[$max_valor] == null){?>' <?php  echo $min[$min_valor]; ?>' <?php }if($min[$min_valor] == null ){echo  $vir; echo $max[$max_valor];echo  $vir;?>
+				' <?php }if($min[$min_valor] == null ){ echo $max[$max_valor]   ?>' <?php } if($min[$min_valor] != null AND $max[$max_valor] != null ){?> <?php echo  $vir; echo  $min[$min_valor]; echo  $vir;?>
+				'<?php echo $min[$min_valor]?>'<?php echo $vir; echo $max[$max_valor];echo  $vir;?> '<?php echo $max[$max_valor]?>' <?php }?>],
+			
+		   <?php }}
+			   
+		   }else{$query = "SELECT id,nome_exame,data_exame,valor_exame FROM exame WHERE id_usuario = '$id_usuario' ORDER BY data_exame ASC ";
+							$resultados = mysqli_query($conexao, $query);
+							$exame 	= mysqli_fetch_all($resultados, MYSQLI_ASSOC);
+					}
+				?>
+
+		  ]);
+	 
+		  
+		  var options = {
+			  title: 'Gráfico em linha do exame de <?php if (!empty($_POST['grafico-f'])) {	echo $_SESSION['nome'];}?>',
+			  responsive: true,
+			  curveType: 'function',
+			   pointSize:7	,
+				legend: 'bottom',
+			  hAxis: {title: 'Data do Exame'},
+			  vAxis: {title: 'Valor do Exame'},
+			   
+				
+			};
+	 
+			var chart = new google.visualization.LineChart(document.getElementById('grafico-linha'));
+	 
+			chart.draw(data_linha, options);
+	  }
+	  
+	  </script>
   
   <script>
+ 
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
  
     function drawChart() {
-      var data = google.visualization.arrayToDataTable([
-	   ['Data', 'Valor do Exame', { role: 'annotation'} ,' Valor de Referência', { role: 'annotation'}],
-
-				//[{label: 'Data do exame', type: 'string'},
-                 //{label: 'Valor do exame', type: 'number'},
-				 //{ role: 'annotation' }, 
-				// { role: 'annotation' }],    
+      		
 				
         <?php
 			
        if (!empty($_POST['grafico-f'])) {	
-					$graficof = $_POST['grafico-f'];
-					if(in_array($graficof, $nomes, TRUE)){
-						$query1 = "SELECT nome_exame,data_exame,valor_exame FROM exame WHERE id_usuario = '$id_usuario'&& nome_exame = '$graficof' ORDER BY data_exame ASC ";
-						$resultado = mysqli_query($conexao, $query1);
-						$exame 	= mysqli_fetch_all($resultado, MYSQLI_ASSOC);
-						 foreach($exame as $dados){
-							$date = $dados['data_exame'];
-							$valor = $dados['valor_exame'];
-							$_SESSION['nome'] = $dados['nome_exame'];
-							$date = strtotime($date);
-							$date = date("d/m/Y",$date);
-							
-			if(in_array($graficof, $valoref, TRUE)){
-									$query = "SELECT valor_nome, min_valor, max_valor FROM valores_exame WHERE valor_nome = '$graficof'";
-									$resultados = mysqli_query($conexao, $query);
-			   $valor_ref = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
-			  // var_dump($valor_ref);
-			   foreach($valor_ref as $dados){
-							$min_valor = $dados['min_valor'];
-			   
-			   
-		
+			$graficof = $_POST['grafico-f'];
+			if(in_array($graficof, $nomes, TRUE)){
+				$query1 = "SELECT nome_exame,data_exame,valor_exame FROM exame WHERE id_usuario = '$id_usuario'&& nome_exame = '$graficof' ORDER BY data_exame ASC ";
+				$resultado = mysqli_query($conexao, $query1);
+				$exame 	= mysqli_fetch_all($resultado, MYSQLI_ASSOC);						
+				if(in_array($graficof, $valoref, TRUE)){
+					$query = "SELECT valor_nome, min_valor, max_valor FROM valores_exame WHERE valor_nome = '$graficof'";
+					$resultados = mysqli_query($conexao, $query);
+					$valor_ref = mysqli_fetch_all($resultados, MYSQLI_ASSOC);
+					//var_dump($valor_ref);
+					foreach($valor_ref as $dados){
+						$_SESSION['nome'] = $dados['valor_nome'];
+						$min_valor = $dados['min_valor'];			
+						$max_valor = $dados['max_valor'];
+						$max[$max_valor] = $dados['max_valor'];
+						$min[$min_valor] =  $dados['min_valor'];
+					}
+				}
+			}
 							
          ?>
-		    ['<?php echo $date ?>',  <?php echo $valor ?>,'<?php echo $valor ?>',      <?php echo $min_valor ?>, '<?php echo $min_valor ?>'],
-		 //['<?php echo $date ?>',<?php echo $valor ?>,<?php echo $valor ?>,'<?php echo $min_valor ?>'],
-
-	   <?php }}}}}
-						
-			?>
-
-      ]);
- 
-      
-      var options = {
-          title: 'Gráfico em barra do exame de <?php  if (!empty($_POST['grafico-f'])) {	echo $_SESSION['nome'];}?>',
-		  responsive: true,
-          curveType: 'function',
-		   pointSize:7	,
-          legend: 'none',
-		  hAxis: {title: 'Data do Exame'},
-		  vAxis: {title: 'Valor do Exame'},
-		    bar: {groupWidth: "40%"},
-			 annotations: {
-          alwaysOutside: true,
-			 }
+		    var data = google.visualization.arrayToDataTable([
+			['Data', 'Valor do Exame', { role: 'annotation'} <?php if($min[$min_valor] == null ){?>, ' Valor maximo de Referência', { role: 'annotation'}
+			<?php }if($max[$max_valor] == null){?>,' Valor mínimo de Referência', { role: 'annotation'}
 			
+			<?php }elseif($min[$min_valor] != null AND $max[$max_valor] != null ){?>, ' Valor mínimo de Referência', { role: 'annotation'},' Valor maximo de Referência', { role: 'annotation'}<?php }?>],
+			<?php
+			 foreach($exame as $dados){
+				$date = $dados['data_exame'];
+				$valor = $dados['valor_exame'];
+				$date = strtotime($date);
+				$date = date("d/m/Y",$date);
+								
+				foreach($valor_ref as $dados){
+					$_SESSION['nome'] = $dados['valor_nome'];
+					$minvalor = $dados['min_valor'];			
+					$maxvalor = $dados['max_valor'];
+			?>
+			
+			['<?php echo $date ?>',  <?php echo $valor ?>, '<?php echo $valor ?>' <?php if($max[$max_valor] == null){echo $vir; echo $min[$min_valor];echo $vir; } ?>
+			<?php if($max[$max_valor] == null){?>' <?php  echo $min[$min_valor]; ?>' <?php }if($min[$min_valor] == null ){echo  $vir; echo $max[$max_valor];echo  $vir;?>
+			' <?php }if($min[$min_valor] == null ){ echo $max[$max_valor]?>' <?php } if($min[$min_valor] != null AND $max[$max_valor] != null ){?> <?php echo  $vir; echo  $min[$min_valor]; echo  $vir;?>
+		  '<?php echo $min[$min_valor]?>'<?php echo $vir; echo $max[$max_valor];echo  $vir;?> '<?php echo $max[$max_valor]?>' <?php }?>],
+		
+	   <?php }}
+		   
+	   }else{$query = "SELECT id,nome_exame,data_exame,valor_exame FROM exame WHERE id_usuario = '$id_usuario' ORDER BY data_exame ASC ";
+						$resultados = mysqli_query($conexao, $query);
+						$exame 	= mysqli_fetch_all($resultados, MYSQLI_ASSOC);
+				}
+			?>		
+      ]);    
+      var options = {
+        title: 'Gráfico em barra do exame de <?php   if (!empty($_POST['grafico-f'])) {	echo $_SESSION['nome'];}?>',
+		responsive: true,
+        curveType: 'function',
+		pointSize:7	,
+        legend: 'bottom',
+		hAxis: {title: 'Data do Exame'},
+		vAxis: {title: 'Valor do Exame'},
+		bar: {groupWidth: "40%"},
         };
- 
         var chartt = new google.visualization.ColumnChart(document.getElementById('grafico-barra'));
- 
         chartt.draw(data, options);
   }
-  
   </script>
-<div id="style-grafico" ><div id="grafico-linha" class ="grafico-linha"  style="width: 100%; height: 500px; display: block; margin-left: auto; margin-right: auto; 
+		<div id="style-grafico" ><div id="grafico-linha" class ="grafico-linha"  style="width: 100%; height: 500px; display: block; margin-left: auto; margin-right: auto; 
 	overflow: hidden;";></div></div>
 	<div id="style-grafico" ><div id="grafico-barra" class ="grafico-linha"  style="width: 100%; height: 500px; display: block; margin-left: auto; margin-right: auto; 
 	overflow: hidden;";></div></div>
-			<br>
-			<a type="button" class="b-cad" href="cad_exame.php">Cadastra novo exame</a>
-			
-			<br>
-			<br><br>
-  
-	</body>	
-	
+		<br><br>
+		<a type="button" class="b-cad" href="cad_exame.php">Cadastra novo exame</a>
+		<br><br><br>  						
+	</body>		
 </html>
